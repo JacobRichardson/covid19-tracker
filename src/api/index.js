@@ -26,3 +26,29 @@ export const fetchData = async () => {
 
 	}
 }
+
+/** 
+ * Exported function to fetch daily data.
+ */
+export const fetchDailyData = async () => {
+
+	try {
+
+		// Retrieve the daily data.
+		const { data } = await axios.get(`${URL}/daily`);
+
+		// Map over each element in the data and create an concise object
+		// With the information that is actually needed.
+		const modifiedData = data.map((dailyData => ({
+			confirmed: dailyData.confirmed.total
+			, deaths: dailyData.deaths.total
+			, date: dailyData.reportDate
+		})));
+
+		// Return the modified data.
+		return modifiedData;
+	}
+	catch (e) {
+
+	}
+}
