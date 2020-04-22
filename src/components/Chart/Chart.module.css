@@ -1,0 +1,8 @@
+/**
+ * CSS for the Chart Component.
+*/
+.container {
+	display: flex;
+	justify-content: center;
+	width: 85%
+}
