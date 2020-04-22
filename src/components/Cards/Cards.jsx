@@ -6,11 +6,25 @@
 import React from 'react';
 import styles from './Cards.module.css';
 import { Card, CardContent, Typography, Grid } from '@material-ui/core';
+import CountUp from 'react-countup';
 
 /** 
  * Cards Functional Component.
 */
 const Cards = (props) => {
+
+    // Retrieve data from props.
+    const data = props.data;
+    
+    // If confirmed is undefined on data.
+    if (!data.confirmed) {
+        
+        // Return the string loading.
+        return 'Loading...';
+    }
+
+    // Retrieve values from data.
+    const { confirmed, recovered, deaths, lastUpdate } = data;
 
     /** 
      * JSX for the card component
@@ -24,10 +38,10 @@ const Cards = (props) => {
                            Infected
                         </Typography>  
                         <Typography variant="h5">
-                            REAL DATA
+                            <CountUp start={0} end={confirmed.value} duration={2.5} separator={","} />
                         </Typography> 
                         <Typography color="textSecondary">
-                            REAL DATE
+                           { new Date(lastUpdate).toDateString() }
                         </Typography> 
                         <Typography variant="body2">
                             Number of active cases of COVID-19
@@ -40,10 +54,10 @@ const Cards = (props) => {
                             Recovered
                         </Typography>  
                         <Typography variant="h5">
-                            REAL DATA
+                            <CountUp start={0} end={recovered.value} duration={2.5} separator={","} />
                         </Typography> 
                         <Typography color="textSecondary">
-                            REAL DATE
+                            { new Date(lastUpdate).toDateString() }
                         </Typography> 
                         <Typography variant="body2">
                             Number of recoveries from COVID-19
@@ -56,10 +70,10 @@ const Cards = (props) => {
                             Deaths
                         </Typography>  
                         <Typography variant="h5">
-                            REAL DATA
+                            <CountUp start={0} end={deaths.value} duration={2.5} separator={","} />
                         </Typography> 
                         <Typography color="textSecondary">
-                            REAL DATE
+                            { new Date(lastUpdate).toDateString() }
                         </Typography> 
                         <Typography variant="body2">
                             Number of deaths caused by COVID-19
