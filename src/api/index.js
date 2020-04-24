@@ -13,18 +13,31 @@ const URL = 'https://covid19.mathdro.id/api';
 /** 
  * Exported function to fetch data from the api.
  */
-export const fetchData = async () => {
+export const fetchData = async (country) => {
+
+	// Create the country url.
+	let actualURL = URL;
+
+	// If country is defined.
+	if (country) {
+
+		// Update the actual URL to include the country.
+		actualURL = `${actualURL}/countries/${country}`;
+	}
+
 
 	try {
 
 		// Retrieve the response from the api.
-		const { data: { confirmed, recovered, deaths, lastUpdate } } = await axios.get(URL);
+		const { data: { confirmed, recovered, deaths, lastUpdate } } = await axios.get(actualURL);
 
 		// Return the data in a new object.
 		return { confirmed, recovered, deaths, lastUpdate };
 
 	} catch (e) {
 
+		// Print out the error.
+		console.log(e);
 	}
 }
 
