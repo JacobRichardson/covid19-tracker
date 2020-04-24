@@ -1,0 +1,7 @@
+/*
+ * CSS for the Country Picker Component.
+ */
+.formControl {
+	width: 30%;
+	margin-bottom: 30px !important;
+}
