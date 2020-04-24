@@ -11,7 +11,7 @@ import styles from './Chart.module.css';
 /** 
  * Functional Component.
 */
-const Chart = () => {
+const Chart = (props) => {
 
     // Create the state using use state.
     const [dailyData, setDailyData] = useState([]);
@@ -63,12 +63,47 @@ const Chart = () => {
         : null
     );
 
+    // Create the bar chart.
+    const barChart = (
+
+        // If data confirmed is truthy.
+        props.data.confirmed ?
+        (
+            <Bar
+                data={{
+                    labels: ['Infected' , 'Recovered', 'Deaths'],
+                    datasets:[{
+                        label: 'People',
+                        backgroundColor: [
+                            'rgba(0, 0, 255, 0.5)',
+                            'rgba(0, 255, 0, 0.5)',
+                            'rgba(255, 0, 0, 0.5)'
+                        ],
+                        data: [props.data.confirmed.value, props.data.recovered.value, props.data.deaths.value]
+                    }]
+                }}
+                options={{
+                    legend: {
+                        display: false
+                    },
+                    title: {
+                        display: true,
+                        text: `Current state in ${props.country}`
+                    }
+                }}
+            />
+        )
+        // Else, return null.
+        : null
+    );
+
     /** 
      * Return the JSX.
     */
     return (
         <div className={styles.container}>
-            {lineChart}
+            {/* If country is defined on props, display a bar chart; else, display a line chart */}
+            {props.country ? barChart : lineChart}
         </div>
     )
 }
