@@ -6,7 +6,7 @@
 import React from 'react';
 import { Cards, Chart, CountryPicker } from './components';
 import styles from './App.module.css'
-import { fetchData } from './api';
+import { fetchData,  } from './api';
 
 /**
  * The main class for the app component.
@@ -17,7 +17,8 @@ class App extends React.Component {
 
     // The state of the component.
     state = {
-        data: {}
+        data: {},
+        country: ''
     }
 
     /**
@@ -37,6 +38,23 @@ class App extends React.Component {
     }
 
     /**
+     * Fetches data when the country is changed.
+     * @param {String} country The chosen country.
+     * @memberof App
+     */
+    handleCountryChange = async (country) => {
+
+        // Fetch the data using the fetch data function.
+        const fetchedData = await fetchData(country);
+
+        // Set the state.
+        this.setState({
+            data: fetchedData,
+            country: country
+        });
+        
+    }
+    /**
      * The render function renders the app.
      * @returns The JSX for the app.
      * @memberof App
@@ -49,7 +67,7 @@ class App extends React.Component {
         return (
             <div className={styles.container}>
                 <Cards data={data}/>
-                <CountryPicker />
+                <CountryPicker handleCountryChange={this.handleCountryChange}/>
                 <Chart />
             </div>
         )
